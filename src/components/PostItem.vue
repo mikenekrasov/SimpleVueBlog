@@ -45,7 +45,7 @@
 				<aside id="sidebar-primary">
 					<header class="entry-header">
 						<!-- <button @click="editPost(post['.key'])" class="btn btn-transparent mt-4">Редактировать</button> -->
-						<button @click="removePost(post['.key'])" class="btn btn-transparent mt-4">Удалить</button>
+						<button @click="removePost(post)" class="btn btn-transparent mt-4">Удалить</button>
 					</header>
 				</aside>
 			</div>
@@ -56,14 +56,20 @@
 
 <script>
 import { postsRef } from '../config/db';
-import {Service} from '../main';
 // import PostDetails from './PostDetails.vue'
 // import PostService from './PostService.js';
 
 export default {
 	name: "PostItem",
     props: {
-        post: Object
+        post: {
+			type: Object,
+			required: true
+		},
+		index: {
+			type: Number,
+			required: true
+		}
 	},
 	// components:{
 	// 	PostDetails
@@ -79,13 +85,9 @@ export default {
 		}
 	},
     methods: {
-        removePost(key){
-			console.log(this.post)
-			// console.log(postsRef.child(key))
-			if (confirm("Вы уверены?")) {
-				postsRef.child(key).remove();
-			}
-        },
+		removePost(post){
+			this.$emit('removePost', post)
+		},
         editPost(key){
             postRef.child(key).update({edit: true});
 		},

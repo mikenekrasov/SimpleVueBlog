@@ -1,5 +1,5 @@
 {
-  "name": "simple-vue-blog",
+  "name": "simple-vue-blog-firebase-native",
   "description": "A Vue.js Blog",
   "version": "1.0.0",
   "author": "Mikhail Nekrasov",
@@ -17,9 +17,10 @@
     "vue-router": "^3.0.2"
   },
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-loader": "^6.0.0",
-    "babel-preset-env": "^1.6.1",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-3": "^6.24.1",
     "cross-env": "^5.1.1",
     "css-loader": "^0.28.7",
     "extract-text-webpack-plugin": "^3.0.2",

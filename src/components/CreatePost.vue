@@ -22,9 +22,6 @@
         </div>
         <div class="col mt-5 mb-5 text-center">
             <button type="submit" class="btn btn-dark text-center">Опубликовать</button>
-        <div v-if="post.edit">
-            <button type="submit" class="btn btn-dark text-center">Отменить</button>
-        </div>
 
         </div>
     </form>
@@ -35,7 +32,6 @@
 <script>
 import { postsRef } from '../config/db';
 import Firebase from 'firebase';
-import PostService from './PostService';
 
 export default {
     name:"CreatePost",
@@ -69,21 +65,28 @@ export default {
         //     } 
         //     return today = (dd + '.' + mm + '.' + yyyy)
         // },
-        createPost() {
-            if(this.title && this.author && this.description && this.image){
+        // createPost() {
+        //     if(this.title && this.author && this.description && this.image){
 
-                // postsRef.push({ title:this.title, 
-                //                 author:this.author, 
-                //                 description:this.description, 
-                //                 image:this.image, 
-                //                 edit: false, 
-                //                 date: Firebase.database.ServerValue.TIMESTAMP });
-                this.orderByDate();
-                
-                // this.$refs.headerModalRef.hide();
-            }
+        //         postsRef.push({ title:this.title, 
+        //                         author:this.author, 
+        //                         description:this.description, 
+        //                         image:this.image, 
+        //                         edit: false, 
+        //                         date: Firebase.database.ServerValue.TIMESTAMP });
+        //     }
+        // },
+        createPost(){
+            this.$emit('createPost', { title:this.title, 
+                                        author:this.author, 
+                                        description:this.description, 
+                                        image:this.image, 
+                                        edit: false, 
+                                        date: Firebase.database.ServerValue.TIMESTAMP })
         },
-
+        removePost(post){
+			this.$emit('removePost', post)
+		},
 
         orderByDate(){
                 var query = postsRef.orderByChild('date')

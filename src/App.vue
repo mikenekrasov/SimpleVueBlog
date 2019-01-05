@@ -1,14 +1,9 @@
 <template>
   <div id="app">
 
-    <svbNavbarComponent/>
+    <navbar-component/>
     <div class="container">
-      <!-- <router-view :posts = "posts"/> -->
       <router-view/>
-    <!-- <svbCreatePost/>
-    <svbSinglePost/>
-    <svbPostsList
-                :posts = "posts"/> -->
 
   </div>
   </div>
@@ -17,14 +12,12 @@
 <script>
 import { postsRef } from './config/db';
 import NavbarComponent from './components/NavbarComponent.vue';
-// import CreatePost from './components/CreatePost.vue';
-// import SinglePost from './components/SinglePost.vue'
 
 
 export default {
   name: 'App',
   components: {
-    'svbNavbarComponent': NavbarComponent,
+    'navbar-component': NavbarComponent,
     
     // svbCreatePost: CreatePost,
     // svbSinglePost: SinglePost
