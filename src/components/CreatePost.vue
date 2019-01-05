@@ -87,59 +87,12 @@ export default {
         removePost(post){
 			this.$emit('removePost', post)
 		},
-
         orderByDate(){
                 var query = postsRef.orderByChild('date')
                 query.on('child_added', function(snap) {
                 var person = snap.val();
                 console.log(person.date);
                 });
-
-
-            // postsRef.orderByChild('date').endAt(3).on('child_added', function(snap){
-            //     console.log('added', snap.val());
-            // });
-            // var feed = [];
-            // postsRef.orderByChild('date').on('value', (snapshot, error) => {
-            //     snapshot.forEach((postSnap) => {
-            //         const post = postSnap.val()
-            //         console.log(postSnap.key+'='+post.title);
-            //         feed.push(post);
-            //     });
-            // });
-            // console.log(feed);
-
-            // postsRef.orderByChild('date').on('value', (snapshot, error) => { 
-            //     let feed = {};
-            //     snapshot.forEach((childSnapshot) => { 
-            //         feed[childSnapshot.key] = childSnapshot.val() 
-            //     }) 
-            //     console.log('ducks feed: ', feed)
-            // })
-            // postsRef.on('child_changed', function(snap){
-            //     console.log('changed', snap.val());
-            // });
-            // postsRef.on('value', function(snap){
-            //     console.log('value', snap.val());
-            // });
-            // postsRef.orderByChild('date').on('child_added', function(snapshot) {
-            //     console.log(snapshot);
-            //     snapshot.forEach(function(child) {
-            //         console.log(child.val())
-            //     });
-            // });
-            // postsRef.orderByChild('date').on("child_added", function(snapshot) { 
-                // console.log(snapshot.val());
-                // console.log(postsRef.database)
-                // console.log(snapshot.val())
-                // The objects are returned in order, do whatever you like
-            // })
-
-                // postsRef.child("date").orderByChild('date').on("value", function (snapshot) {
-                // snapshot.forEach(function(child) {
-                //     console.log(child.val())
-                // });
-                // })
 
         }
 
