@@ -1,4 +1,4 @@
-# simple-vue-blog
+# simple-vue-blog-firebase-native
 
 > A Vue.js Blog
 
