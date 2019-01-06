@@ -1,6 +1,6 @@
 <template>
     <!-- <div class="posts-list posts-list--default one-right-sidebar"> -->
-		<article id="post-157" class="post">
+		<article id="post" class="post">
 			<router-link :to="'/'">Назад</router-link>
 			<h1>Пост {{id}}</h1>
 			<div class="row">
@@ -52,7 +52,9 @@ import { postsRef } from '../config/db';
 
 export default {
 	name:'PostDetails',
-	props:['recievedPost'],
+	props: {
+		post: Object
+	},
     data() {
         return {
 			id: this.$route.params.id,
@@ -69,6 +71,7 @@ export default {
         updateId(){
 			this.id = this.$route.params.id
 		}
+		
     }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
     <!-- <div class="posts-list posts-list--default one-right-sidebar"> -->
-		<article id="post-157" class="posts-list__item post-157 post type-post status-publish format-standard has-post-thumbnail hentry has-thumb">
+		<article id="post" class="posts-list__item post type-post status-publish format-standard has-post-thumbnail hentry has-thumb">
 			<div class="row">
 			<div class="col-md-8">
 				<div id="primary">
@@ -10,7 +10,7 @@
 			<header class="entry-header">
 				<h1 class="entry-title mt-4">
 					<!-- <a :href="post['.key']" rel="bookmark" @click="viewDetailsClicked">{{post.title}}</a> -->
-					<router-link :to="{ name:'PostDetails', params: { id: post['.key'] }}">{{post.title}}</router-link>
+					<router-link :to="{ name:'PostDetails', params: { id: post.id }}">{{post.title}}</router-link>
 					<!-- <router-link @click.native="sendPostObject" :to="{ name:'PostDetails', params: { id: post['.key'] }}">{{post.title}}</router-link> -->
 				</h1>
 			</header>
@@ -21,7 +21,7 @@
 				</span>
 			<!-- Date/Time -->
 				<span class="post__date">
-					<time class="post-date__time">{{post.date}}</time>
+					<time class="post-date__time">{{post.date | convertToDate}}</time>
 				</span>
 			</div>
 			<hr>
@@ -66,10 +66,10 @@ export default {
 			type: Object,
 			required: true
 		},
-		index: {
-			type: Number,
-			required: true
-		}
+		// index: {
+		// 	type: Number,
+		// 	required: true
+		// }
 	},
 	// components:{
 	// 	PostDetails
@@ -80,17 +80,22 @@ export default {
         }
 	},
 	filters:{
-		limit(value) {
-			return value.slice(0,100) + "..."
+		limit:(value) => value.slice(0,100) + "...",
+		convertToDate(timestamp) {
+			// let month = ('0' + (new Date(timestamp).getMonth() +1)).slice(-2)
+			// let day = ('0' + new Date(timestamp).getDay()).slice(-2)
+			// let year = new Date(timestamp).getFullYear()
+			// return day + '.' + month + '.' + year
+			let options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+			return new Date(timestamp).toLocaleString('ru-RU', options)
+
 		}
 	},
     methods: {
 		removePost(post){
 			this.$emit('removePost', post)
-		},
-        editPost(key){
-            postRef.child(key).update({edit: true});
-		},
+			},
+        editPost:(key) => postRef.child(key).update({edit: true}),
 		// sendPostObject(){
 		// 	Service.$emit('postObjectSent', this.post);
 		// },

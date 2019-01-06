@@ -1,16 +1,14 @@
 <template>
 	<div>
-		<CreatePost @createPost="createPost"/>
-		<post-item v-for="(post, index) in posts" :key="id" :post="post" :index="index" @removePost="removePost"  />
+		<create-post @createPost="createPost" :post="post"/>
+		<post-item v-for="(post, index) in posts" :key="index" :post="post" @removePost="removePost"  />
 	</div>
 </template>
 <script>
 
 import {postsRef} from '../config/db';
-// import {Service} from '../main';
 import CreatePost from './CreatePost.vue'
 import PostItem from './PostItem.vue';
-// import PostService from './PostService.js';
 
 
 export default {
@@ -21,18 +19,18 @@ export default {
 	data(){
 		return {
 			posts:[],
-			id:null,
-			title:'',
-            author:'',
-            description:'',
-            image:'',
+			id:null
 		}
 	},
 	created(){
 		// postsRef.on('child_added', snapshot => console.log(snapshot.val()));
 
+
 		postsRef.orderByChild('date').on('child_added', snapshot => {
 			this.posts.push({...snapshot.val(),	id:snapshot.key})
+			this.posts.date = -1 * snapshot.val().date 
+
+			console.log(snapshot.val().date + '  ' +snapshot.val().title);
 		})
 
 		postsRef.on('child_removed', snapshot => {
@@ -44,14 +42,16 @@ export default {
 	},
 	components: {
 		'post-item':PostItem,
-		CreatePost
+		'create-post':CreatePost
 	},
   methods: {
 	createPost(post) {
-		if(post){
-			console.log(post)
-			postsRef.push(post);
-		}
+		postsRef.push(post);
+		// post.title = '';
+		// post.author = '';
+		// post.description ='';
+		// post.image='';
+
 	},
 	removePost(post){
 		if (confirm("Вы уверены?")) {

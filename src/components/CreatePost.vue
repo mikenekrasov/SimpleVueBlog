@@ -31,16 +31,17 @@
 
 <script>
 import { postsRef } from '../config/db';
+import { db } from '../config/db';
 import Firebase from 'firebase';
 
 export default {
     name:"CreatePost",
     props:{
-        // post:Object
+        post:Object
     },
     data() {
         return {
-            post:{},
+            // post:{},
             title:'',
             author:'',
             description:'',
@@ -77,24 +78,19 @@ export default {
         //     }
         // },
         createPost(){
-            this.$emit('createPost', { title:this.title, 
-                                        author:this.author, 
-                                        description:this.description, 
-                                        image:this.image, 
-                                        edit: false, 
-                                        date: Firebase.database.ServerValue.TIMESTAMP })
+            if(this.title && this.author && this.description && this.image) {
+                // let dateCreated = Firebase.database.ServerValue.TIMESTAMP;
+                this.$emit('createPost', { title:this.title, 
+                                            author:this.author, 
+                                            description:this.description, 
+                                            image:this.image, 
+                                            edit: false, 
+                                            date: (Firebase.database.ServerValue.TIMESTAMP) * -1 })
+            }
         },
         removePost(post){
 			this.$emit('removePost', post)
-		},
-        orderByDate(){
-                var query = postsRef.orderByChild('date')
-                query.on('child_added', function(snap) {
-                var person = snap.val();
-                console.log(person.date);
-                });
-
-        }
+        },
 
     }
 }
