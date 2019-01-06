@@ -7,6 +7,7 @@
 <script>
 
 import {postsRef} from '../config/db';
+import {db} from '../config/db';
 import CreatePost from './CreatePost.vue'
 import PostItem from './PostItem.vue';
 
@@ -46,7 +47,14 @@ export default {
 	},
   methods: {
 	createPost(post) {
-		postsRef.push(post);
+
+		postsRef.push(post).then(_=>{
+			const dateRef = db.ref('/posts/');
+			dateRef.once('value').then((snapshot) => {
+				let date = snapshot.val().date * -1
+				dateRef.update({ date })
+			})
+		})
 		// post.title = '';
 		// post.author = '';
 		// post.description ='';

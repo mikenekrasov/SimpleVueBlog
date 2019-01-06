@@ -79,13 +79,13 @@ export default {
         // },
         createPost(){
             if(this.title && this.author && this.description && this.image) {
-                // let dateCreated = Firebase.database.ServerValue.TIMESTAMP;
+                let timestamp = Firebase.database.ServerValue.TIMESTAMP;
                 this.$emit('createPost', { title:this.title, 
                                             author:this.author, 
                                             description:this.description, 
                                             image:this.image, 
                                             edit: false, 
-                                            date: (Firebase.database.ServerValue.TIMESTAMP) * -1 })
+                                            date: Firebase.database.ServerValue.TIMESTAMP })
             }
         },
         removePost(post){
