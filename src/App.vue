@@ -10,7 +10,21 @@
 </template>
 
 <script>
-import { postsRef } from './config/db';
+export const store = {
+  debug: true,
+  state: {
+    message: "Привет!"
+  },
+  setMessageAction(newValue) {
+    if (this.debug) console.log("setMessageAction вызвано с ", newValue);
+    this.state.message = newValue;
+  },
+  clearMessageAction() {
+    if (this.debug) console.log("clearMessageAction вызвано");
+    this.state.message = "";
+  }
+};
+
 import NavbarComponent from './components/NavbarComponent.vue';
 
 
@@ -18,9 +32,7 @@ export default {
   name: 'App',
   components: {
     'navbar-component': NavbarComponent,
-    
-    // svbCreatePost: CreatePost,
-    // svbSinglePost: SinglePost
+ 
   },
   data(){
     return {
@@ -28,33 +40,11 @@ export default {
     }
   },
 
-  // firebase: {
-  //   posts: postsRef
-  // },
   methods: {
-    // submitTitle: () => {
-    //   postsRef.push({ title: this.title, edit: false});
-    //   this.title = '';
-    // },
-    // removetitle(key){
-    //   postsRef.child(key).remove();
-    // },
-    // setEdittitle(key){
 
-    //   postsRef.child(key).update({edit: true})
-    // },
-    // cancelEdit(key){
-    //   postsRef.child(key).update({ edit: false })
-    // },
-    // saveEdit(person){
-    //   const key = person['.key'];
-    //   postsRef.child(key).set({ title: person.title, edit: false });
-    // }
   },
   computed: {
-    // sortedList: () => {
-    //   return this.posts.sort((a,b) => { return new Date(a.date) - new Date(b.date) })
-    // }
+
   }
 }
 </script>

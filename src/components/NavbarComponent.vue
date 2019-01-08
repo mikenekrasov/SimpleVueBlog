@@ -1,12 +1,16 @@
 <template>
     <!-- Navigation -->
     <b-navbar toggleable sticky class="bd-navbar" type="dark" variant="dark">
-    <b-container>
-    <b-navbar-toggle target="nav_text_collapse"></b-navbar-toggle>
-    <b-navbar-brand>Simple Vue Blog</b-navbar-brand>
-    <b-collapse is-nav id="nav_text_collapse">
-    </b-collapse>
-    </b-container>
+        <b-container>
+            <b-navbar-brand>
+                    <router-link class="logo" to="/">
+                    Simple Vue Blog
+                    </router-link>
+                </b-link>
+            </b-navbar-brand>
+            <!-- <b-collapse is-nav id="nav_text_collapse">
+            </b-collapse> -->
+        </b-container>
     </b-navbar>
 </template>
 
@@ -23,5 +27,8 @@ export default {
 </script>
 
 <style>
-
+    .logo, .logo:hover {
+        color:#FFFFFF;
+        text-decoration: none;
+    }
 </style>

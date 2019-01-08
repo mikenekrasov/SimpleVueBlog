@@ -9,15 +9,13 @@
 			<!-- Title -->
 			<header class="entry-header">
 				<h1 class="entry-title mt-4">
-					<!-- <a :href="post['.key']" rel="bookmark" @click="viewDetailsClicked">{{post.title}}</a> -->
-					<router-link :to="{ name:'PostDetails', params: { id: post.id }}">{{post.title}}</router-link>
-					<!-- <router-link @click.native="sendPostObject" :to="{ name:'PostDetails', params: { id: post['.key'] }}">{{post.title}}</router-link> -->
+					<router-link :to="{ name:'PostDetails', params: { id: post.id, post: this.post }}">{{post.title}}</router-link>
 				</h1>
 			</header>
 			<!-- Author -->
 			<div class="entry-meta">
 				<span class="post-author">
-					<p class="post-author lead">by {{post.author}}</p>
+					<p class="post-author lead">Автор: {{post.author}}</p>
 				</span>
 			<!-- Date/Time -->
 				<span class="post__date">
@@ -27,15 +25,13 @@
 			<hr>
 			<!-- Preview Image -->
 			<figure class="post-thumbnail">
-                <router-link :to="{ path: 'details/'}">
-				<!-- <a class="post-thumbnail__link post-thumbnail--fullwidth" href="#"> -->
+                <router-link :to="{ name:'PostDetails', params: { id: post.id, post: this.post }}">
 					<img class="post-thumbnail__img wp-post-image" :src="post.image" :alt="post.title">
-				<!-- </a> -->
                 </router-link>
 			</figure>
 			<!-- Post Content -->
 			<div class="entry-content">
-				<p class="lead">{{post.description | limit}}</p>
+				<p class="lead">{{post.description | limitContent}}</p>
 			</div>
 			<hr>
 			</main>
@@ -44,7 +40,7 @@
 			<div class="col-md-4">
 				<aside id="sidebar-primary">
 					<header class="entry-header">
-						<!-- <button @click="editPost(post['.key'])" class="btn btn-transparent mt-4">Редактировать</button> -->
+						
 						<button @click="removePost(post)" class="btn btn-transparent mt-4">Удалить</button>
 					</header>
 				</aside>
@@ -57,7 +53,6 @@
 <script>
 import { postsRef } from '../config/db';
 // import PostDetails from './PostDetails.vue'
-// import PostService from './PostService.js';
 
 export default {
 	name: "PostItem",
@@ -65,47 +60,30 @@ export default {
         post: {
 			type: Object,
 			required: true
-		},
-		// index: {
-		// 	type: Number,
-		// 	required: true
-		// }
+		}
+
 	},
-	// components:{
-	// 	PostDetails
-	// },
     data (){
         return {
-			id: this.$route.params.id
+			// id: this.$route.params.id
         }
 	},
+	created(){console.log(this.post)},
 	filters:{
-		limit:(value) => value.slice(0,100) + "...",
-		convertToDate(timestamp) {
-			// let month = ('0' + (new Date(timestamp).getMonth() +1)).slice(-2)
-			// let day = ('0' + new Date(timestamp).getDay()).slice(-2)
-			// let year = new Date(timestamp).getFullYear()
-			// return day + '.' + month + '.' + year
-			let options = { year: 'numeric', month: 'numeric', day: 'numeric' };
-			return new Date(timestamp).toLocaleString('ru-RU', options)
+		limitContent(value) {
+			return value.length <= 100 ? value : value.slice(0,100) + "..."
 
+			},
+		convertToDate(timestamp) {
+			let newDate = Math.abs(timestamp)
+			let options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+			return new Date(newDate).toLocaleString('ru-RU', options)
 		}
 	},
     methods: {
 		removePost(post){
 			this.$emit('removePost', post)
 			},
-        editPost:(key) => postRef.child(key).update({edit: true}),
-		// sendPostObject(){
-		// 	Service.$emit('postObjectSent', this.post);
-		// },
-        viewDetailsClicked() {
-			// this.$emit("viewDetails",this.post.date);
-			let key = this.post['.key'];
-			// this.viewDetails(key);
-			// PostService.viewDetails(key);
-			// this.$router.push('/detail/' + key);
-        }
     }
 }
 </script>

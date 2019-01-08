@@ -1,13 +1,11 @@
 <template>
 	<div>
 		<create-post @createPost="createPost" :post="post"/>
-		<post-item v-for="(post, index) in posts" :key="index" :post="post" @removePost="removePost"  />
+		<post-item v-for="(post, index) in posts" :key="post.id" :post="post" @removePost="removePost"  />
 	</div>
 </template>
 <script>
-
-import {postsRef} from '../config/db';
-import {db} from '../config/db';
+import {postsRef, db} from '../config/db';
 import CreatePost from './CreatePost.vue'
 import PostItem from './PostItem.vue';
 
@@ -15,28 +13,41 @@ import PostItem from './PostItem.vue';
 export default {
 	name:"PostLists",
     props: {
-		post: Object
+		post:{
+			type: Object
+		}
 	},
 	data(){
 		return {
 			posts:[],
-			id:null
+			id:null,
+			title:'',
+            author:'',
+            description:'',
+            image:''
 		}
 	},
 	created(){
-		// postsRef.on('child_added', snapshot => console.log(snapshot.val()));
-
-
+		
 		postsRef.orderByChild('date').on('child_added', snapshot => {
 			this.posts.push({...snapshot.val(),	id:snapshot.key})
-			this.posts.date = -1 * snapshot.val().date 
+			this.posts.sort((a, b) => b.date-a.date);
 
-			console.log(snapshot.val().date + '  ' +snapshot.val().title);
+		})
+
+		postsRef.orderByChild('date').on('child_changed', snapshot => {
+			const updatedPost = this.posts.find(post => post.id == snapshot.key)
+			updatedPost.title = snapshot.val().title
+			updatedPost.author = snapshot.val().author
+			updatedPost.description = snapshot.val().description
+			updatedPost.image = snapshot.val().image
+			updatedPost.date = snapshot.val().date
+
 		})
 
 		postsRef.on('child_removed', snapshot => {
-			const findTheKey = this.posts.find(post => post.id == snapshot.key)
-			const index = this.posts.indexOf(findTheKey)
+			const updatedPost = this.posts.find(post => post.id == snapshot.key)
+			const index = this.posts.indexOf(updatedPost)
 			this.posts.splice(index,1)
 		})
 
@@ -47,23 +58,21 @@ export default {
 	},
   methods: {
 	createPost(post) {
+		postsRef.push(post)
+		// const promise = postsRef.push(post)
+		// const key = promise.key
+		// 	promise.then(_ => {
+		// 		const dateRef = db.ref('/posts/' + key)
+		// 			dateRef.once('value').then((snapshot) => {
+		// 				let date = snapshot.val().date * -1
+		// 				dateRef.update({ date })
+		// 				console.log(this.posts)
 
-		postsRef.push(post).then(_=>{
-			const dateRef = db.ref('/posts/');
-			dateRef.once('value').then((snapshot) => {
-				let date = snapshot.val().date * -1
-				dateRef.update({ date })
-			})
-		})
-		// post.title = '';
-		// post.author = '';
-		// post.description ='';
-		// post.image='';
-
+		// 	});
+		// })
 	},
 	removePost(post){
 		if (confirm("Вы уверены?")) {
-			console.log(post)
 			postsRef.child(post.id).remove();
 		}
 	},

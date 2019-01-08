@@ -1,8 +1,6 @@
 <template>
-    <!-- <div class="posts-list posts-list--default one-right-sidebar"> -->
 		<article id="post" class="post">
 			<router-link :to="'/'">Назад</router-link>
-			<h1>Пост {{id}}</h1>
 			<div class="row">
 			<div class="col-md-12">
 				<div id="primary">
@@ -11,32 +9,30 @@
 			<!-- Title -->
 			<header class="entry-header">
 				<h1 class="entry-title mt-4">
-					<!-- <a href="#" rel="bookmark">{{post.title}}</a> -->
+					<a href="#" rel="bookmark">{{post.title}}</a>
 				</h1>
 			</header>
 			<!-- Author -->
 			<div class="entry-meta">
 				<span class="post-author">
-					<!-- <p class="post-author lead" href="#">by {{post.author}}</p> -->
+					<p class="post-author lead" href="#">Автор: {{post.author}}</p>
 				</span>
 			<!-- Date/Time -->
 				<span class="post__date">
-					<!-- <time class="post-date__time">{{post.date}}</time> -->
+					<time class="post-date__time">{{post.date | convertToDate}}</time>
 				</span>
 			</div>
-
-
 			<hr>
 			<!-- Preview Image -->
 			<figure class="post-thumbnail">
 				<a class="post-thumbnail__link post-thumbnail--fullwidth" href="#">
-					<!-- <img class="post-thumbnail__img wp-post-image" :src="post.image" :alt="post.title"> -->
+					<img class="post-thumbnail__img wp-post-image" :src="post.image" :alt="post.title">
 				</a>
 			</figure>
 			<hr>
 			<!-- Post Content -->
 			<div class="entry-content">
-				<!-- <p class="lead">{{post.description}}</p> -->
+				<p class="lead">{{post.description}}</p>
 			</div>
 			<hr>
 			</main>
@@ -44,25 +40,25 @@
 			</div>
 			</div>
 		</article>
-	<!-- </div> -->
 </template>
 <script>
 import { postsRef } from '../config/db';
-
+import { store } from '../App.vue';
 
 export default {
 	name:'PostDetails',
-	props: {
-		post: Object
-	},
     data() {
         return {
 			id: this.$route.params.id,
-			post: {}
+			post: this.$route.params.post
         }
 	},
-	created() {
-	
+	filters:{
+		convertToDate(timestamp) {
+			let newDate = Math.abs(timestamp)
+			let options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+			return new Date(newDate).toLocaleString('ru-RU', options)
+		}
 	},
 	watch:{
 		$route: "updateId"
@@ -70,7 +66,7 @@ export default {
     methods: {
         updateId(){
 			this.id = this.$route.params.id
-		}
+		},
 		
     }
 }
