@@ -1,12 +1,11 @@
-import PostsList from '../components/PostsList.vue';
+import PostList from '../components/PostList.vue';
 import PostDetails from '../components/PostDetails.vue';
 
 
-export const routes = [
-  {
+export const routes = [{
     path: '/',
-    name:'PostsList',
-    component: PostsList
+    name: 'PostList',
+    component: PostList
   },
   {
     path: '/post/:id',
@@ -14,4 +13,3 @@ export const routes = [
     component: PostDetails
   }
 ]
-  

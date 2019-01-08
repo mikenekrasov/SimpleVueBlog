@@ -9,7 +9,6 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 Vue.use(BootstrapVue);
 
-// export const Service = new Vue();
 
 new Vue({
   router,

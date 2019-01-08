@@ -1,4 +1,5 @@
-import Firebase from 'firebase';
+import Firebase from 'firebase/app';
+import 'Firebase/database';
 
 const config = {
   apiKey: "AIzaSyAc-hQRTToaUMBkdVIgEgBjkvm6MwSYUHU",
@@ -11,3 +12,4 @@ const config = {
   let app = Firebase.initializeApp(config);
   export const db = app.database();
   export const postsRef = db.ref('posts');
+  export const timestamp = Firebase.database.ServerValue.TIMESTAMP;
