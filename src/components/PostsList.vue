@@ -59,45 +59,16 @@ export default {
   methods: {
 	createPost(post) {
 		postsRef.push(post)
-		// const promise = postsRef.push(post)
-		// const key = promise.key
-		// 	promise.then(_ => {
-		// 		const dateRef = db.ref('/posts/' + key)
-		// 			dateRef.once('value').then((snapshot) => {
-		// 				let date = snapshot.val().date * -1
-		// 				dateRef.update({ date })
-		// 				console.log(this.posts)
-
-		// 	});
-		// })
 	},
 	removePost(post){
 		if (confirm("Вы уверены?")) {
 			postsRef.child(post.id).remove();
 		}
-	},
-    // submitTitle: () => {
-    //   postsRef.push({ title: this.title, edit: false});
-    //   this.title = '';
-    // },
-    // removetitle(key){
-    //   postsRef.child(key).remove();
-    // },
-    // setEdittitle(key){
-
-    //   postsRef.child(key).update({edit: true})
-    // },
-    // cancelEdit(key){
-    //   postsRef.child(key).update({ edit: false })
-    // },
-    // saveEdit(person){
-    //   const key = person['.key'];
-    //   postsRef.child(key).set({ title: person.title, edit: false });
-    // }
-  },
+	}
+  }
 }
 </script>
-<style>
+<style scoped>
 img {
     height: auto;
     max-width: 100%;

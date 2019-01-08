@@ -23,7 +23,7 @@ export const store = {
   }
 };
 
-import NavbarComponent from './components/NavbarComponent.vue';
+import TheNavbar from './components/TheNavbar.vue';
 
 
 export default {
