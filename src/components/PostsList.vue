@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<create-post @createPost="createPost" :post="post"/>
-		<post-item v-for="(post, index) in posts" :key="post.id" :post="post" @removePost="removePost"  />
+		<post-item v-for="post in posts" :key="post.id" :post="post" @removePost="removePost"  />
 	</div>
 </template>
 <script>

@@ -6,7 +6,6 @@
                     <router-link class="logo" to="/">
                     Simple Vue Blog
                     </router-link>
-                </b-link>
             </b-navbar-brand>
             <!-- <b-collapse is-nav id="nav_text_collapse">
             </b-collapse> -->
