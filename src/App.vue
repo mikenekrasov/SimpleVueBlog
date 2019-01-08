@@ -1,11 +1,9 @@
 <template>
   <div id="app">
-
-    <navbar-component/>
-    <div class="container">
-      <router-view/>
-
-  </div>
+      <TheNavbar/>
+      <div class="container">
+        <router-view/>
+      </div>
   </div>
 </template>
 
@@ -31,7 +29,7 @@ import NavbarComponent from './components/NavbarComponent.vue';
 export default {
   name: 'App',
   components: {
-    'navbar-component': NavbarComponent,
+    TheNavbar
  
   },
   data(){

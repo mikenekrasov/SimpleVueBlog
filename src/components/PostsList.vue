@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<create-post @createPost="createPost" :post="post"/>
-		<post-item v-for="post in posts" :key="post.id" :post="post" @removePost="removePost"  />
+		<CreatePost @createPost="createPost" :post="post"/>
+		<PostItem v-for="post in posts" :key="post.id" :post="post" @removePost="removePost"  />
 	</div>
 </template>
 <script>
@@ -53,8 +53,8 @@ export default {
 
 	},
 	components: {
-		'post-item':PostItem,
-		'create-post':CreatePost
+		PostItem,
+		CreatePost
 	},
   methods: {
 	createPost(post) {
